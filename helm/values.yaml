@@ -1,0 +1,118 @@
+wandb:
+  service:
+    type: ClusterIP
+    port: 8080
+
+storage:
+  provider: "gcs"
+  # The bucket value will be overridden by the setup script using Terraform output.
+  bucket: "gs://wandb-artifacts"  
+
+# NOTE: Replace the license below with a valid W&B license key if required.
+license: "eyJhbGciOiJSUzI1NiIsImtpZCI6InUzaHgyQjQyQWhEUXM1M0xQY09yNnZhaTdoSlduYnF1bTRZTlZWd1VwSWM9In0.eyJjb25jdXJyZW50QWdlbnRzIjoxMCwidHJpYWwiOnRydWUsIm1heFN0b3JhZ2VHYiI6MTAwMDAwMCwibWF4VGVhbXMiOjUwLCJtYXhVc2VycyI6MTAwLCJtYXhWaWV3T25seVVzZXJzIjowLCJtYXhSZWdpc3RlcmVkTW9kZWxzIjo1LCJleHBpcmVzQXQiOiIyMDI1LTAzLTE5VDA1OjM0OjAzLjg1OFoiLCJkZXBsb3ltZW50SWQiOiIzOTJjZTBiNy1mZGEwLTRmYjEtOTg4Mi1mYWI1MDYyZDgxMTgiLCJmbGFncyI6WyJOT1RJRklDQVRJT05TIiwic2xhY2siLCJub3RpZmljYXRpb25zIiwiU0NBTEFCTEUiLCJteXNxbCIsInMzIiwicmVkaXMiLCJNQU5BR0VNRU5UIiwib3JnX2Rhc2giLCJhdXRoMCIsImNvbGxlY3RfYXVkaXRfbG9ncyIsInJiYWMiXSwiY29udHJhY3RTdGFydERhdGUiOiIyMDI1LTAyLTE3VDA1OjM0OjAzLjg1OVoiLCJhY2Nlc3NLZXkiOiI0OWMwYmNjOS1mMmM3LTRlNmItOTljNi0zY2M0MzAyMzM4NzEiLCJzZWF0cyI6MTAwLCJ2aWV3T25seVNlYXRzIjowLCJ0ZWFtcyI6NTAsInJlZ2lzdGVyZWRNb2RlbHMiOjUsInN0b3JhZ2VHaWdzIjoxMDAwMDAwLCJleHAiOjE3NDIzNjI0NDMsIndlYXZlTGltaXRzIjp7IndlYXZlTGltaXRCeXRlcyI6bnVsbCwid2VhdmVPdmVyYWdlQ29zdENlbnRzIjowLCJ3ZWF2ZU92ZXJhZ2VVbml0IjoiTUIifX0.a1AfidPN6WBCJy9iQkrlJxUi4H_YR4oHqdncu4IiP86hUxdKm2o603V1xJLk_X2VwOBPP35SHH0aEOFDaQI4Tnk_VWPi8uQHLVIrNAGCOxWaqboLTCK6DFXZ80n46HJQSC7nj2-Y63XLyzEreZkbVntY9vR-xL6EyGgmmDGQRMxift9fNQUawlvh5M7XKDq4rK0Lsw7VDx3PPTxZgaeJ_TuksKGC05jtXwO-JOmmiTqJWNqDr9v_PxocIPKJ8x-OjqjVrxK996b-Pe6HfhoAytJs4eXRjXeYfKCIuT7UoDgV4OW8AnZ_Fab95IrmxP0ySJiDFRrv6HTdMqH0GoWhNA"
+
+database:
+  enabled: false  # Using default local storage; see official docs for external DB setup if needed.
+
+auth:
+  adminUser: "admin"
+  adminPassword: "secure-password"
+
+ingress:
+  enabled: true
+  className: "gce"
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: "wandb.example.com"
+      paths:
+        - path: /
+          pathType: Prefix
+
+serviceAccount:
+  create: false
+  name: "wandb-service-account"
+
+resources:
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+
+replicaCount: 2
+
+livenessProbe:
+  httpGet:
+    path: "/healthz"
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 30
+
+readinessProbe:
+  httpGet:
+    path: "/healthz"
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+
+# wandb:
+#   service:
+#     type: ClusterIP
+#     port: 8080
+
+# storage:
+#   provider: "gcs"
+#   bucket: "gs://wandb-artifacts"
+
+# license: "eyJhbGciOiJSUzI1NiIsImtpZCI6InUzaHgyQjQyQWhEUXM1M0xQY09yNnZhaTdoSlduYnF1bTRZTlZWd1VwSWM9In0.eyJjb25jdXJyZW50QWdlbnRzIjoxMCwidHJpYWwiOnRydWUsIm1heFN0b3JhZ2VHYiI6MTAwMDAwMCwibWF4VGVhbXMiOjUwLCJtYXhVc2VycyI6MTAwLCJtYXhWaWV3T25seVVzZXJzIjowLCJtYXhSZWdpc3RlcmVkTW9kZWxzIjo1LCJleHBpcmVzQXQiOiIyMDI1LTAzLTE5VDA1OjM0OjAzLjg1OFoiLCJkZXBsb3ltZW50SWQiOiIzOTJjZTBiNy1mZGEwLTRmYjEtOTg4Mi1mYWI1MDYyZDgxMTgiLCJmbGFncyI6WyJOT1RJRklDQVRJT05TIiwic2xhY2siLCJub3RpZmljYXRpb25zIiwiU0NBTEFCTEUiLCJteXNxbCIsInMzIiwicmVkaXMiLCJNQU5BR0VNRU5UIiwib3JnX2Rhc2giLCJhdXRoMCIsImNvbGxlY3RfYXVkaXRfbG9ncyIsInJiYWMiXSwiY29udHJhY3RTdGFydERhdGUiOiIyMDI1LTAyLTE3VDA1OjM0OjAzLjg1OVoiLCJhY2Nlc3NLZXkiOiI0OWMwYmNjOS1mMmM3LTRlNmItOTljNi0zY2M0MzAyMzM4NzEiLCJzZWF0cyI6MTAwLCJ2aWV3T25seVNlYXRzIjowLCJ0ZWFtcyI6NTAsInJlZ2lzdGVyZWRNb2RlbHMiOjUsInN0b3JhZ2VHaWdzIjoxMDAwMDAwLCJleHAiOjE3NDIzNjI0NDMsIndlYXZlTGltaXRzIjp7IndlYXZlTGltaXRCeXRlcyI6bnVsbCwid2VhdmVPdmVyYWdlQ29zdENlbnRzIjowLCJ3ZWF2ZU92ZXJhZ2VVbml0IjoiTUIifX0.a1AfidPN6WBCJy9iQkrlJxUi4H_YR4oHqdncu4IiP86hUxdKm2o603V1xJLk_X2VwOBPP35SHH0aEOFDaQI4Tnk_VWPi8uQHLVIrNAGCOxWaqboLTCK6DFXZ80n46HJQSC7nj2-Y63XLyzEreZkbVntY9vR-xL6EyGgmmDGQRMxift9fNQUawlvh5M7XKDq4rK0Lsw7VDx3PPTxZgaeJ_TuksKGC05jtXwO-JOmmiTqJWNqDr9v_PxocIPKJ8x-OjqjVrxK996b-Pe6HfhoAytJs4eXRjXeYfKCIuT7UoDgV4OW8AnZ_Fab95IrmxP0ySJiDFRrv6HTdMqH0GoWhNA"
+
+# database:
+#   enabled: false  # No external database, W&B uses default local storage
+
+# auth:
+#   adminUser: "admin"
+#   adminPassword: "secure-password"
+
+# ingress:
+#   enabled: true
+#   className: "gce"
+#   annotations:
+#     kubernetes.io/ingress.class: "gce"
+#     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+#   hosts:
+#     - host: "wandb.example.com"
+#       paths:
+#         - path: /
+#           pathType: Prefix
+
+# serviceAccount:
+#   create: false
+#   name: "wandb-service-account"
+
+# resources:
+#   limits:
+#     cpu: "2"
+#     memory: "4Gi"
+#   requests:
+#     cpu: "1"
+#     memory: "2Gi"
+
+# replicaCount: 2
+
+# livenessProbe:
+#   httpGet:
+#     path: "/healthz"
+#     port: 8080
+#   initialDelaySeconds: 10
+#   periodSeconds: 30
+
+# readinessProbe:
+#   httpGet:
+#     path: "/healthz"
+#     port: 8080
+#   initialDelaySeconds: 5
+#   periodSeconds: 10
