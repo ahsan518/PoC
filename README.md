@@ -102,6 +102,12 @@ Please follow the steps provided
 
     ```
 
+    *Note:* After doing above, make sure to create the SA appropriately to reside in created ns 
+    
+    ```
+    kubectl create serviceaccount wandb-service-account -n wandb
+    ```
+
 4.  **Apply the Ingress Configuration:**
 
     ```
@@ -241,6 +247,6 @@ Additional Notes
 ----------------
 
 -   **Service Account:**\
-    The deployment uses a manually created service account (`wandb-service-account`). Ensure it exists in the `wandb` namespace if you set `serviceAccount.create` to `false` in your Helm values.
+    The deployment uses a manually created service account (`wandb-service-account`). Ensure it exists in the `wandb` namespace if you set `serviceAccount.create` to `false` in your Helm values. After the successful installation of infrastructure, after doing `helm upgrade --install wandb wandb/wandb --namespace wandb --create-namespace --set storage.bucket="gs://wandb-artifacts-annular-garden-451204-d3%" --values helm/values.yaml` 
 
 * * * * *

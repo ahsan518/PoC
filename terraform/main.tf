@@ -75,8 +75,8 @@ module "gke" {
       name         = "default-pool"
       machine_type = "n2-standard-4"
       node_count   = var.node_count
-      auto_repair  = false # true
-      auto_upgrade = true # true
+      auto_repair  = false
+      auto_upgrade = true
       min_count    = 1
       max_count    = 3
       node_config = jsonencode({
