@@ -1,0 +1,217 @@
+➜  scripts git:(master) ✗ ./log_runs.sh
+Requirement already satisfied: wandb in /usr/local/lib/python3.11/site-packages (0.19.6)
+Requirement already satisfied: click!=8.0.0,>=7.1 in /usr/local/lib/python3.11/site-packages (from wandb) (8.1.8)
+Requirement already satisfied: docker-pycreds>=0.4.0 in /usr/local/lib/python3.11/site-packages (from wandb) (0.4.0)
+Requirement already satisfied: gitpython!=3.1.29,>=1.0.0 in /usr/local/lib/python3.11/site-packages (from wandb) (3.1.44)
+Requirement already satisfied: platformdirs in /usr/local/lib/python3.11/site-packages (from wandb) (4.3.6)
+Requirement already satisfied: protobuf!=4.21.0,!=5.28.0,<6,>=3.19.0 in /usr/local/lib/python3.11/site-packages (from wandb) (5.29.3)
+Requirement already satisfied: psutil>=5.0.0 in /usr/local/lib/python3.11/site-packages (from wandb) (7.0.0)
+Requirement already satisfied: pydantic<3,>=2.6 in /usr/local/lib/python3.11/site-packages (from wandb) (2.10.6)
+Requirement already satisfied: pyyaml in /usr/local/lib/python3.11/site-packages (from wandb) (6.0.1)
+Requirement already satisfied: requests<3,>=2.0.0 in /usr/local/lib/python3.11/site-packages (from wandb) (2.32.3)
+Requirement already satisfied: sentry-sdk>=2.0.0 in /usr/local/lib/python3.11/site-packages (from wandb) (2.22.0)
+Requirement already satisfied: setproctitle in /usr/local/lib/python3.11/site-packages (from wandb) (1.3.4)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.11/site-packages (from wandb) (68.0.0)
+Requirement already satisfied: typing-extensions<5,>=4.4 in /usr/local/lib/python3.11/site-packages (from wandb) (4.12.2)
+Requirement already satisfied: six>=1.4.0 in /usr/local/lib/python3.11/site-packages (from docker-pycreds>=0.4.0->wandb) (1.16.0)
+Requirement already satisfied: gitdb<5,>=4.0.1 in /usr/local/lib/python3.11/site-packages (from gitpython!=3.1.29,>=1.0.0->wandb) (4.0.12)
+Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.11/site-packages (from pydantic<3,>=2.6->wandb) (0.7.0)
+Requirement already satisfied: pydantic-core==2.27.2 in /usr/local/lib/python3.11/site-packages (from pydantic<3,>=2.6->wandb) (2.27.2)
+Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.11/site-packages (from requests<3,>=2.0.0->wandb) (3.4.1)
+Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.11/site-packages (from requests<3,>=2.0.0->wandb) (3.10)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.11/site-packages (from requests<3,>=2.0.0->wandb) (2.3.0)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.11/site-packages (from requests<3,>=2.0.0->wandb) (2025.1.31)
+Requirement already satisfied: smmap<6,>=3.0.1 in /usr/local/lib/python3.11/site-packages (from gitdb<5,>=4.0.1->gitpython!=3.1.29,>=1.0.0->wandb) (5.0.2)
+
+[notice] A new release of pip is available: 23.2.1 -> 25.0.1
+[notice] To update, run: python3.11 -m pip install --upgrade pip
+wandb: (1) Create a W&B account
+wandb: (2) Use an existing W&B account
+wandb: (3) Don't visualize my results
+wandb: Enter your choice: 2
+wandb: You chose 'Use an existing W&B account'
+wandb: You can find your API key in your browser here: http://localhost:8080/authorize
+wandb: Paste an API key from your profile and hit enter, or press ctrl+c to quit:
+wandb: Appending key for localhost to your netrc file: /Users/syedzaidi/.netrc
+wandb: Currently logged in as: ahsanmx518 to http://localhost:8080. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135930-6lbyjctj
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-0
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/6lbyjctj
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 0
+wandb:
+wandb: 🚀 View run test-run-0 at: http://localhost:8080/ahsanmx518/POC-Project/runs/6lbyjctj
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135930-6lbyjctj/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135934-cot32lov
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-1
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/cot32lov
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 1
+wandb:
+wandb: 🚀 View run test-run-1 at: http://localhost:8080/ahsanmx518/POC-Project/runs/cot32lov
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135934-cot32lov/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135936-lyn748rv
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-2
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/lyn748rv
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 2
+wandb:
+wandb: 🚀 View run test-run-2 at: http://localhost:8080/ahsanmx518/POC-Project/runs/lyn748rv
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135936-lyn748rv/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135938-v91oj3rx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-3
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/v91oj3rx
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 3
+wandb:
+wandb: 🚀 View run test-run-3 at: http://localhost:8080/ahsanmx518/POC-Project/runs/v91oj3rx
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135938-v91oj3rx/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135939-gmhzjhjx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-4
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/gmhzjhjx
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 4
+wandb:
+wandb: 🚀 View run test-run-4 at: http://localhost:8080/ahsanmx518/POC-Project/runs/gmhzjhjx
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135939-gmhzjhjx/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135941-ix9d6ldr
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-5
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/ix9d6ldr
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 5
+wandb:
+wandb: 🚀 View run test-run-5 at: http://localhost:8080/ahsanmx518/POC-Project/runs/ix9d6ldr
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135941-ix9d6ldr/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135943-p4j478ev
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-6
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/p4j478ev
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 6
+wandb:
+wandb: 🚀 View run test-run-6 at: http://localhost:8080/ahsanmx518/POC-Project/runs/p4j478ev
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135943-p4j478ev/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135945-dfc1he0n
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-7
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/dfc1he0n
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 7
+wandb:
+wandb: 🚀 View run test-run-7 at: http://localhost:8080/ahsanmx518/POC-Project/runs/dfc1he0n
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135945-dfc1he0n/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135947-kxqmvnx1
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-8
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/kxqmvnx1
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 8
+wandb:
+wandb: 🚀 View run test-run-8 at: http://localhost:8080/ahsanmx518/POC-Project/runs/kxqmvnx1
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135947-kxqmvnx1/logs
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in /Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/wandb/run-20250217_135949-6ypyq2sn
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run test-run-9
+wandb: ⭐️ View project at http://localhost:8080/ahsanmx518/POC-Project
+wandb: 🚀 View run at http://localhost:8080/ahsanmx518/POC-Project/runs/6ypyq2sn
+wandb:
+wandb:
+wandb: Run history:
+wandb: iteration ▁
+wandb:
+wandb: Run summary:
+wandb: iteration 9
+wandb:
+wandb: 🚀 View run test-run-9 at: http://localhost:8080/ahsanmx518/POC-Project/runs/6ypyq2sn
+wandb: ⭐️ View project at: http://localhost:8080/ahsanmx518/POC-Project
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250217_135949-6ypyq2sn/logs

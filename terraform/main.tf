@@ -66,7 +66,6 @@ module "gke" {
 
   ip_range_pods         = google_compute_global_address.gke_pods_range.name
   ip_range_services     = google_compute_global_address.gke_services_range.name
-  # enable_shielded_nodes = true
 
   remove_default_node_pool = true
   initial_node_count       = var.node_count
@@ -74,18 +73,18 @@ module "gke" {
   node_pools = [
     {
       name         = "default-pool"
-      machine_type = "e2-medium" # "e2-medium"
+      machine_type = "n2-standard-4"
       node_count   = var.node_count
       auto_repair  = false # true
       auto_upgrade = true # true
       min_count    = 1
-      max_count    = 3 #2
+      max_count    = 3
       node_config = jsonencode({
         disk_type = "pd-standard"
-        disk_size = 10 #20
+        disk_size = 10
         shielded_instance_config = {
-          enable_secure_boot          = false # true,
-          enable_integrity_monitoring = false # true
+          enable_secure_boot          = false 
+          enable_integrity_monitoring = false 
         }
       })
     }

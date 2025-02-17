@@ -1,0 +1,35 @@
+{
+  "os": "macOS-14.7-x86_64-i386-64bit",
+  "python": "CPython 3.11.4",
+  "startedAt": "2025-02-17T19:59:41.861539Z",
+  "program": "/Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts/log_runs.py",
+  "codePath": "scripts/log_runs.py",
+  "git": {
+    "remote": "git@github.com:ahsan518/PoC.git",
+    "commit": "b14f2f120f65c33df7c1965ca89c8916825fbec5"
+  },
+  "email": "ahsanmx518@gmail.com",
+  "root": "/Users/syedzaidi/Desktop/untitled folder 3/wandb-self-hosted/scripts",
+  "host": "sada-hq-macpro160",
+  "executable": "/usr/local/opt/python@3.11/bin/python3.11",
+  "codePathLocal": "log_runs.py",
+  "cpu_count": 6,
+  "cpu_count_logical": 12,
+  "disk": {
+    "/": {
+      "total": "499963174912",
+      "used": "343529242624"
+    },
+    "/System/Volumes/Data": {
+      "total": "499963174912",
+      "used": "343529242624"
+    }
+  },
+  "memory": {
+    "total": "17179869184"
+  },
+  "cpu": {
+    "count": 6,
+    "countLogical": 12
+  }
+}
