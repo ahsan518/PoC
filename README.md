@@ -102,7 +102,7 @@ Please follow the steps provided
 
     ```
 
-    *Note:* After doing above, make sure to create the SA appropriately to reside in created ns 
+    *Note:* After doing above, make sure to create the k8s SA appropriately to reside in created ns 
     
     ```
     kubectl create serviceaccount wandb-service-account -n wandb
