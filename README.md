@@ -94,7 +94,7 @@ Please follow the steps provided
     Retrieve the GCS bucket name from Terraform outputs and install the chart:
 
     ```
-    BUCKET_NAME=$(terraform -chdir=terraform output -raw gcs_bucket)
+    
     helm upgrade --install wandb wandb/wandb\
       --namespace wandb --create-namespace\
       --set storage.bucket="gs://${BUCKET_NAME}"\
@@ -103,7 +103,7 @@ Please follow the steps provided
     ```
 
     *Note:* After doing above, make sure to create the SA appropriately to reside in created ns 
-
+    
     ```
     kubectl create serviceaccount wandb-service-account -n wandb
     ```
@@ -112,7 +112,6 @@ Please follow the steps provided
 
     ```
     kubectl apply -f ../helm/wandb-ingress.yaml
-
     ```
 
     *Note:* Ensure that your ingress host (e.g., `wandb.example.com`) is correctly configured in DNS or your hosts file.
@@ -123,7 +122,6 @@ Please follow the steps provided
 
     ```
     kubectl port-forward svc/wandb 8080:8080 -n wandb
-
     ```
 
     Then, open your browser and navigate to:
@@ -144,7 +142,6 @@ You can verify that all components are running correctly by using the provided v
 ```
 chmod +x scripts/verify.sh
 ./scripts/verify.sh
-
 ```
 
 This script checks:
@@ -161,14 +158,12 @@ Check the status of resources in the `wandb` namespace:
 kubectl get pods -n wandb
 kubectl get svc -n wandb
 kubectl get ingress -n wandb
-
 ```
 
 View logs for the W&B deployment:
 
 ```
 kubectl logs -n wandb -l app.kubernetes.io/name=wandb --tail=50
-
 ```
 
 If you have set up an ingress (e.g., with host `wandb.example.com`), open that URL in your browser to view the W&B login page.
@@ -186,21 +181,18 @@ The repository includes both a Python script and a shell wrapper to log sample r
 
     ```
     pip install --upgrade wandb
-
     ```
 
 2.  Log in to your W&B server (replace the host with your domain if necessary):
 
     ```
     wandb login --host https://wandb.example.com
-
     ```
 
 3.  Run the Python script:
 
     ```
     python3 scripts/log_runs.py
-
     ```
 
 This script logs 10 runs (named `test-run-0` to `test-run-9`) under the project `my-wandb-project`.
@@ -212,7 +204,6 @@ Alternatively, run the provided shell script:
 ```
 chmod +x scripts/log_runs.sh
 ./scripts/log_runs.sh
-
 ```
 
 After running, verify that the runs appear in your W&B UI under the specified project.
@@ -228,7 +219,6 @@ To tear down the deployment and remove all provisioned resources:
 
     ```
     helm uninstall wandb -n wandb
-
     ```
 
 2.  Destroy the Terraform-managed infrastructure:
@@ -236,7 +226,6 @@ To tear down the deployment and remove all provisioned resources:
     ```
     cd terraform
     terraform destroy -auto-approve
-
     ```
 
 3.  Confirm that all resources have been removed in the GCP Console.
@@ -248,4 +237,5 @@ Additional Notes
 
 -   **Service Account:**\
     The deployment uses a manually created service account (`wandb-service-account`). Ensure it exists in the `wandb` namespace.
+
 * * * * *
