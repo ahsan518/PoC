@@ -1,5 +1,3 @@
-Below is the formatted problem statement:
-
 W&B Self-Hosted Server Provisioning Assignment
 ==============================================
 
