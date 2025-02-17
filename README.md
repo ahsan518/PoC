@@ -3,10 +3,9 @@ Self-Hosted Weights & Biases on GKE
 
 This repository demonstrates how to provision a **private** GKE cluster using **Terraform**, deploy a self-hosted instance of [Weights & Biases (W&B)](https://wandb.ai/) with **Helm**, and log sample runs via a Python script. This setup includes:
 
--   A **private** GKE cluster with no external node IPs.
--   **Shielded VMs** (if enforced by your organization).
+-   A GKE cluster with no external node IPs.
 -   A **Google Cloud Storage (GCS) bucket** for artifact storage.
--   Automated deployment steps with supporting scripts.
+-   Automated deployment steps with supporting instructions.
 
 * * * * *
 
@@ -27,8 +26,11 @@ Prerequisites
 Repository Structure
 --------------------
 
-```
-.
+bash
+
+Copy
+
+`.
 ├── terraform/
 │   ├── providers.tf       # Providers & required versions (Google: >= 6.0.0, < 7.0.0)
 │   ├── variables.tf       # Terraform variables
@@ -38,121 +40,135 @@ Repository Structure
 │   ├── values.yaml        # Custom Helm values for W&B
 │   └── wandb-ingress.yaml # Ingress resource for W&B
 ├── scripts/
-│   ├── setup.sh           # (Optional) Automates provisioning, Helm install, and ingress setup
-│   ├── verify.sh          # (Optional) Verifies the W&B deployment on GKE
-│   ├── log_runs.sh        # (Optional) Bash script to log 10 runs
+│   ├── verify.sh          # Verifies the W&B deployment on GKE
+│   ├── log_runs.sh        # Bash script to log 10 runs
 │   └── log_runs.py        # Python script to log 10 runs via W&B SDK
-└── README.md              # This file
-
-```
+└── README.md              # Documentation`
 
 * * * * *
 
 Deployment Steps
 ----------------
 
-There are two approaches to deploy the infrastructure and W&B instance: **automated** (using provided scripts) or **manual**.
+Follow these steps to manually deploy the infrastructure and W&B instance:
 
-### Option 1: Automated Deployment with Scripts
+### 1\. Deploy the Infrastructure with Terraform
 
-1.  **Clone the Repository:**
+1.  **Change to the terraform directory:**
 
-    ```
-    git clone https://github.com/your-org/your-repo.git
-    cd your-repo
+    bash
 
-    ```
+    Copy
 
-2.  **Run the Setup Script:**
+    `cd terraform`
 
-    Make the setup script executable and run it:
+2.  **Initialize Terraform:**
 
-    ```
-    chmod +x scripts/setup.sh
-    ./scripts/setup.sh
+    bash
 
-    ```
+    Copy
 
-    This script will:
+    `terraform init`
 
-    -   Initialize and apply Terraform (from the `terraform/` directory).
-    -   Fetch the GKE credentials.
-    -   Install the W&B Helm chart (using values from `helm/values.yaml`).
-    -   Apply the ingress configuration from `helm/wandb-ingress.yaml`.
+3.  **Review the Plan:**
 
-### Option 2: Manual Deployment
+    bash
 
-1.  **Deploy the Infrastructure with Terraform:**
+    Copy
 
-    Change to the terraform directory and initialize/apply the configuration:
+    `terraform plan`
 
-    ```
-    cd terraform
-    terraform init
-    terraform apply -auto-approve
+4.  **Apply the Configuration:**
 
-    ```
+    bash
+
+    Copy
+
+    `terraform apply -auto-approve`
 
     This provisions:
 
     -   A **VPC** with a custom subnetwork (with secondary IP ranges for GKE pods and services).
-    -   A **GKE cluster** with Shielded VMs (if required) and a custom node pool.
+    -   A **GKE cluster** and a custom node pool.
     -   A **GCS bucket** for W&B artifacts.
-    -   A **service account** with the storage.admin role.
-2.  **Fetch Cluster Credentials:**
+    -   A **service account** (if managed via Terraform or created manually) with the necessary IAM roles.
 
-    Retrieve the cluster name from Terraform outputs and fetch credentials:
+### 2\. Fetch Cluster Credentials
 
-    ```
-    CLUSTER_NAME=$(terraform output -raw gke_name)
-    gcloud container clusters get-credentials "$CLUSTER_NAME" --region $(terraform output -raw region)
+Retrieve the cluster name from Terraform outputs and fetch credentials:
 
-    ```
+bash
 
-3.  **Deploy the W&B Helm Chart:**
+Copy
 
-    Add and update the W&B Helm repository:
+`CLUSTER_NAME=$(terraform output -raw gke_name)
+gcloud container clusters get-credentials "$CLUSTER_NAME" --region $(terraform output -raw region)`
 
-    ```
-    helm repo add wandb https://wandb.github.io/helm-charts
-    helm repo update
+### 3\. Deploy the W&B Helm Chart
 
-    ```
+1.  **Add and Update the W&B Helm Repository:**
 
-    Retrieve the GCS bucket name from Terraform outputs and install the chart:
+    bash
 
-    ```
-    BUCKET_NAME=$(terraform -chdir=terraform output -raw gcs_bucket)
+    Copy
+
+    `helm repo add wandb https://wandb.github.io/helm-charts
+    helm repo update`
+
+2.  **Retrieve the GCS Bucket Name and Install the Chart:**
+
+    bash
+
+    Copy
+
+    `BUCKET_NAME=$(terraform -chdir=terraform output -raw gcs_bucket)
     helm upgrade --install wandb wandb/wandb\
       --namespace wandb --create-namespace\
       --set storage.bucket="gs://${BUCKET_NAME}"\
-      --values ../helm/values.yaml
+      --values ../helm/values.yaml`
 
-    ```
+### 4\. Apply the Ingress Configuration
 
-4.  **Apply the Ingress Configuration:**
+Apply the ingress manifest to expose your W&B instance:
 
-    ```
-    kubectl apply -f ../helm/wandb-ingress.yaml
+bash
 
-    ```
+Copy
 
-    *Note:* Ensure that your ingress host (e.g., `wandb.example.com`) is correctly configured in DNS or your hosts file.
+`kubectl apply -f ../helm/wandb-ingress.yaml`
 
-* * * * *
+*Note:* Ensure that your ingress host (e.g., `wandb.example.com`) is correctly configured in DNS or your hosts file.
 
-Verifying the Deployment
-------------------------
+### 5\. (Optional) Port Forwarding for Local Testing
+
+If you do not have DNS set up or wish to test locally, you can port-forward the W&B service:
+
+bash
+
+Copy
+
+`kubectl port-forward svc/wandb 8080:8080 -n wandb`
+
+Then, open your browser and navigate to:
+
+arduino
+
+Copy
+
+`http://localhost:8080`
+
+### 6\. Verifying the Deployment
 
 You can verify that all components are running correctly by using the provided verification script or manual kubectl commands.
 
-### Using the Verification Script
+#### Using the Verification Script
 
-```
-chmod +x scripts/verify.sh
-./scripts/verify.sh
+bash
 
-```
+Copy
+
+`chmod +x scripts/verify.sh
+./scripts/verify.sh`
 
 This script checks:
 
@@ -160,80 +176,76 @@ This script checks:
 -   Services and ingress configuration.
 -   Recent logs for troubleshooting.
 
-### Manual Verification
+#### Manual Verification
 
 Check the status of resources in the `wandb` namespace:
 
-```
-kubectl get pods -n wandb
-kubectl get svc -n wandb
-kubectl get ingress -n wandb
+bash
 
-```
+Copy
+
+`kubectl get pods -n wandb
+kubectl get svc -n wandb
+kubectl get ingress -n wandb`
 
 View logs for the W&B deployment:
 
-```
-kubectl logs -n wandb -l app.kubernetes.io/name=wandb --tail=50
+bash
 
-```
+Copy
 
-If you have set up an ingress (e.g., with host `wandb.example.com`), open that URL in your browser to view the W&B login page.
+`kubectl logs -n wandb -l app.kubernetes.io/name=wandb --tail=50`
 
-* * * * *
+Then, open your browser and navigate to `http://wandb.example.com` (or use the port-forward URL) to view the W&B login page.
 
-Logging 10 Runs
----------------
+### 7\. Logging 10 Runs
 
-The repository includes both a Python script and a shell wrapper to log sample runs to your self-hosted W&B instance.
+The repository includes both a Python script and a shell script to log sample runs to your self-hosted W&B instance.
 
-### Python Script Approach
+#### Python Script Approach
 
-1.  Install the wandb package:
+1.  **Install the wandb Package:**
 
-    ```
-    pip install --upgrade wandb
+    bash
 
-    ```
+    Copy
 
-2.  Log in to your W&B server (replace the host with your domain if necessary):
+    `pip install --upgrade wandb`
 
-    ```
-    wandb login --host https://wandb.example.com
+2.  **Log in to Your W&B Server:**
 
-    ```
+    Replace the host with your domain if necessary:
 
-3.  Run the Python script:
+    bash
 
-    ```
-    python3 scripts/log_runs.py
+    Copy
 
-    ```
+    `wandb login --host=https://wandb.example.com`
 
-This script logs 10 runs (named `test-run-0` to `test-run-9`) under the project `my-wandb-project`.
+    (Alternatively, if using port-forwarding locally, use `--host=http://localhost:8080`)
 
-### Shell Script Option
+3.  **Run the Python Script:**
+
+    bash
+
+    Copy
+
+    `python3 scripts/log_runs.py`
+
+    This script logs 10 runs (named `test-run-0` to `test-run-9`) under the project `my-wandb-project`.
+
+#### Shell Script Option
 
 Alternatively, run the provided shell script:
 
-```
-chmod +x scripts/log_runs.sh
-./scripts/log_runs.sh
+bash
 
-```
+Copy
+
+`chmod +x scripts/log_runs.sh
+./scripts/log_runs.sh`
 
 After running, verify that the runs appear in your W&B UI under the specified project.
-
-* * * * *
-
-Screenshots
------------
-
-Include or attach screenshots demonstrating your setup, such as:
-
--   **W&B Home Page** -- Showing the login or project dashboard.
--   **W&B Project Page** -- Listing the 10 logged runs.
--   **GCP Console** -- Displaying the GKE cluster, VPC/subnets, and GCS bucket.
 
 * * * * *
 
@@ -242,20 +254,22 @@ Cleanup
 
 To tear down the deployment and remove all provisioned resources:
 
-1.  Uninstall the Helm release:
+1.  **Uninstall the Helm Release:**
 
-    ```
-    helm uninstall wandb -n wandb
+    bash
 
-    ```
+    Copy
 
-2.  Destroy the Terraform-managed infrastructure:
+    `helm uninstall wandb -n wandb`
 
-    ```
-    cd terraform
-    terraform destroy -auto-approve
+2.  **Destroy the Terraform-Managed Infrastructure:**
 
-    ```
+    bash
+
+    Copy
+
+    `cd terraform
+    terraform destroy -auto-approve`
 
 3.  Confirm that all resources have been removed in the GCP Console.
 
@@ -264,13 +278,7 @@ To tear down the deployment and remove all provisioned resources:
 Additional Notes
 ----------------
 
--   **Autoscaling:**\
-    The GKE cluster is configured via Terraform with autoscaling enabled for the node pool. The default settings allow a minimum of 1 node and a maximum of 5 nodes. Adjust these values in `terraform/main.tf` as needed.
-
 -   **Service Account:**\
     The deployment uses a manually created service account (`wandb-service-account`). Ensure it exists in the `wandb` namespace if you set `serviceAccount.create` to `false` in your Helm values.
-
--   **Resource Requirements:**\
-    If you encounter scheduling issues (e.g., insufficient CPU/memory), consider increasing the maximum node count or adjusting the resource requests/limits in `helm/values.yaml`.
 
 * * * * *

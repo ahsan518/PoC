@@ -1,8 +1,7 @@
 variable "project_id" {
   description = "GCP Project ID"
   type        = string
-  default     = "annular-garden-451204-d3"
-}
+  }
 
 variable "region" {
   description = "GCP Region"
